@@ -1,0 +1,4 @@
+div
+	span(x-large='') Your Content Here
+	input(type='text', [value]='data.value', (input)='data.value = $event.target.value', autofocus='')
+	pre this.data = {{ data | json }}

@@ -9,7 +9,7 @@ typings install node --save
  * this file for now. For example
 
 declare module "my-module" {
-  export function doesSomething(value: string): string;
+	export function doesSomething(value: string): string;
 }
 
  *
@@ -34,33 +34,33 @@ import * as _ from 'lodash'
 declare var ENV: string;
 declare var HMR: boolean;
 interface GlobalEnvironment {
-  ENV;
-  HMR;
+	ENV;
+	HMR;
 }
 
 interface WebpackModule {
-  hot: {
-    data?: any,
-    idle: any,
-    accept(dependencies?: string | string[], callback?: (updatedDependencies?: any) => void): void;
-    decline(dependencies?: string | string[]): void;
-    dispose(callback?: (data?: any) => void): void;
-    addDisposeHandler(callback?: (data?: any) => void): void;
-    removeDisposeHandler(callback?: (data?: any) => void): void;
-    check(autoApply?: any, callback?: (err?: Error, outdatedModules?: any[]) => void): void;
-    apply(options?: any, callback?: (err?: Error, outdatedModules?: any[]) => void): void;
-    status(callback?: (status?: string) => void): void | string;
-    removeStatusHandler(callback?: (status?: string) => void): void;
-  };
+	hot: {
+		data?: any,
+		idle: any,
+		accept(dependencies?: string | string[], callback?: (updatedDependencies?: any) => void): void;
+		decline(dependencies?: string | string[]): void;
+		dispose(callback?: (data?: any) => void): void;
+		addDisposeHandler(callback?: (data?: any) => void): void;
+		removeDisposeHandler(callback?: (data?: any) => void): void;
+		check(autoApply?: any, callback?: (err?: Error, outdatedModules?: any[]) => void): void;
+		apply(options?: any, callback?: (err?: Error, outdatedModules?: any[]) => void): void;
+		status(callback?: (status?: string) => void): void | string;
+		removeStatusHandler(callback?: (status?: string) => void): void;
+	};
 }
 
 interface WebpackRequire {
-  context(file: string, flag?: boolean, exp?: RegExp): any;
+	context(file: string, flag?: boolean, exp?: RegExp): any;
 }
 
 
 interface ErrorStackTraceLimit {
-  stackTraceLimit: number;
+	stackTraceLimit: number;
 }
 
 
@@ -72,11 +72,11 @@ interface Global extends GlobalEnvironment  {}
 
 
 interface Thenable<T> {
-  then<U>(
-    onFulfilled?: (value: T) => U | Thenable<U>,
-    onRejected?: (error: any) => U | Thenable<U>): Thenable<U>;
-  then<U>(
-    onFulfilled?: (value: T) => U | Thenable<U>,
-    onRejected?: (error: any) => void): Thenable<U>;
-  catch<U>(onRejected?: (error: any) => U | Thenable<U>): Thenable<U>;
+	then<U>(
+		onFulfilled?: (value: T) => U | Thenable<U>,
+		onRejected?: (error: any) => U | Thenable<U>): Thenable<U>;
+	then<U>(
+		onFulfilled?: (value: T) => U | Thenable<U>,
+		onRejected?: (error: any) => void): Thenable<U>;
+	catch<U>(onRejected?: (error: any) => U | Thenable<U>): Thenable<U>;
 }

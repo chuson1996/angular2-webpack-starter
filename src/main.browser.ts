@@ -22,19 +22,19 @@ import {App} from './app/app';
  * our Services and Providers into Angular's dependency injection
  */
 export function main(initialState = {}) {
-  let APP_PROVIDERS = [
-    provideInitialState(initialState),
-    AppState
-  ];
+	let APP_PROVIDERS = [
+		provideInitialState(initialState),
+		AppState
+	];
 
-  return bootstrap(App, [
-    ...ENV_PROVIDERS,
-    ...PROVIDERS,
-    ...DIRECTIVES,
-    ...PIPES,
-    ...APP_PROVIDERS,
-  ])
-  .catch(err => console.error(err));
+	return bootstrap(App, [
+		...ENV_PROVIDERS,
+		...PROVIDERS,
+		...DIRECTIVES,
+		...PIPES,
+		...APP_PROVIDERS,
+	])
+	.catch(err => console.error(err));
 
 }
 
@@ -55,9 +55,9 @@ export function main(initialState = {}) {
  * experimental version by @gdi2290
  */
 if ('development' === ENV && HMR === true) {
-  // activate hot module reload
-  hotModuleReplacement(main, module);
+	// activate hot module reload
+	hotModuleReplacement(main, module);
 } else {
-  // bootstrap when documetn is ready
-  document.addEventListener('DOMContentLoaded', () => main());
+	// bootstrap when documetn is ready
+	document.addEventListener('DOMContentLoaded', () => main());
 }

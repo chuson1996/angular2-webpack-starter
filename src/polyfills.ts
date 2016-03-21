@@ -11,16 +11,16 @@ import 'core-js';
 // import 'zone.js/lib/browser/browser'; //  beta.10 and beta.11 problem
 // see workaround below
 if ('production' === ENV) {
-  // Production
+	// Production
 
 
 } else {
-  // Development
+	// Development
 
-  Error.stackTraceLimit = Infinity;
+	Error.stackTraceLimit = Infinity;
 
-  //
-  // require('zone.js/dist/long-stack-trace-zone');
+	//
+	// require('zone.js/dist/long-stack-trace-zone');
 
 }
 
@@ -48,12 +48,12 @@ patchTimer(global, 'mozRequest', 'mozCancel', 'AnimationFrame');
 patchTimer(global, 'webkitRequest', 'webkitCancel', 'AnimationFrame')
 
 for (var i = 0; i < blockingMethods.length; i++) {
-  var name = blockingMethods[i];
-  patchMethod(global, name, (delegate, symbol, name) => {
-    return function (s:any, args: any[]) {
-      return Zone.current.run(delegate, global, args, name)
-    }
-  });
+	var name = blockingMethods[i];
+	patchMethod(global, name, (delegate, symbol, name) => {
+		return function (s:any, args: any[]) {
+			return Zone.current.run(delegate, global, args, name)
+		}
+	});
 }
 
 eventTargetPatch(global);
@@ -66,65 +66,65 @@ registerElementPatch(global);
 
 /// GEO_LOCATION
 if (global['navigator'] && global['navigator'].geolocation) {
-  patchPrototype(global['navigator'].geolocation, [
-    'getCurrentPosition',
-    'watchPosition'
-  ]);
+	patchPrototype(global['navigator'].geolocation, [
+		'getCurrentPosition',
+		'watchPosition'
+	]);
 }
 
 interface TimerOptions extends TaskData {
-  handleId: number,
-  args: any[]
+	handleId: number,
+	args: any[]
 }
 
 function patchTimer(
-    window: any,
-    setName: string,
-    cancelName: string,
-    nameSuffix: string)
+		window: any,
+		setName: string,
+		cancelName: string,
+		nameSuffix: string)
 {
-  setName += nameSuffix;
-  cancelName += nameSuffix;
+	setName += nameSuffix;
+	cancelName += nameSuffix;
 
-  function scheduleTask(task: Task) {
-    var data = <TimerOptions>task.data;
-    data.args[0] = task.invoke;
-    data.handleId = setNative.apply(window, data.args);
-    return task;
-  }
+	function scheduleTask(task: Task) {
+		var data = <TimerOptions>task.data;
+		data.args[0] = task.invoke;
+		data.handleId = setNative.apply(window, data.args);
+		return task;
+	}
 
-  function clearTask(task: Task) {
-    return clearNative((<TimerOptions>task.data).handleId);
-  }
+	function clearTask(task: Task) {
+		return clearNative((<TimerOptions>task.data).handleId);
+	}
 
-  var setNative = patchMethod(
-    window,
-    setName,
-    (delegate: Function) => function(self: any, args: any[]) {
-    if (typeof args[0] === 'function') {
-      var zone = Zone.current;
-      var options: TimerOptions = {
-        handleId: null,
-        isPeriodic: nameSuffix == 'Interval',
-        delay: (nameSuffix == 'Timeout' || nameSuffix == 'Interval') ? args[1] || 0 : null,
-        args: args
-      };
-      return zone.scheduleMacroTask(setName, args[0], options, scheduleTask, clearTask);
-    } else {
-      // cause an error by calling it directly.
-      return delegate.apply(window, args);
-    }
-  });
+	var setNative = patchMethod(
+		window,
+		setName,
+		(delegate: Function) => function(self: any, args: any[]) {
+		if (typeof args[0] === 'function') {
+			var zone = Zone.current;
+			var options: TimerOptions = {
+				handleId: null,
+				isPeriodic: nameSuffix == 'Interval',
+				delay: (nameSuffix == 'Timeout' || nameSuffix == 'Interval') ? args[1] || 0 : null,
+				args: args
+			};
+			return zone.scheduleMacroTask(setName, args[0], options, scheduleTask, clearTask);
+		} else {
+			// cause an error by calling it directly.
+			return delegate.apply(window, args);
+		}
+	});
 
-  var clearNative = patchMethod(window, cancelName, (delegate: Function) => function(self: any, args: any[]) {
-    var task: Task = args[0];
-    if (task && typeof task.type == 'string') {
-      task.zone.cancelTask(task);
-    } else {
-      // cause an error by calling it directly.
-      delegate.apply(window, args);
-    }
-  });
+	var clearNative = patchMethod(window, cancelName, (delegate: Function) => function(self: any, args: any[]) {
+		var task: Task = args[0];
+		if (task && typeof task.type == 'string') {
+			task.zone.cancelTask(task);
+		} else {
+			// cause an error by calling it directly.
+			delegate.apply(window, args);
+		}
+	});
 }
 
 require('zone.js/dist/long-stack-trace-zone');

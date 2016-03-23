@@ -13,6 +13,7 @@ console.log('`About` component loaded asynchronously');
 	template: `patrick@AngularClass.com`
 })
 export class About {
+	url = `Just an 'About' url...`;
 	constructor() {
 
 	}

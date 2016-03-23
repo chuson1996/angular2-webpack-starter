@@ -20,7 +20,7 @@ const HMR = helpers.hasProcessFlag('hot');
 const METADATA = {
 	title: 'Angular2 Webpack Starter by @gdi2990 from @AngularClass',
 	baseUrl: '/',
-	host: 'localhost',
+	host: '0.0.0.0',
 	port: 5000,
 	ENV: ENV,
 	HMR: HMR

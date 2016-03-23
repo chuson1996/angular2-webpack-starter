@@ -15,10 +15,6 @@
     "class-name": true,
     "curly": false,
     "eofline": true,
-    "indent": [
-      true,
-      "spaces"
-    ],
     "max-line-length": [
       true,
       100

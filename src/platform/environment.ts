@@ -1,7 +1,7 @@
 // Angular 2 browser
 import {
-  ELEMENT_PROBE_PROVIDERS,
-  ELEMENT_PROBE_PROVIDERS_PROD_MODE
+	ELEMENT_PROBE_PROVIDERS,
+	ELEMENT_PROBE_PROVIDERS_PROD_MODE
 } from 'angular2/platform/browser';
 
 // Angular 2
@@ -11,24 +11,24 @@ import {enableProdMode} from 'angular2/core';
 var PROVIDERS = [];
 
 if ('production' === ENV) {
-  // Production
-  enableProdMode();
+	// Production
+	enableProdMode();
 
-  PROVIDERS = [
-    ...PROVIDERS,
-    ELEMENT_PROBE_PROVIDERS_PROD_MODE
-  ];
+	PROVIDERS = [
+		...PROVIDERS,
+		ELEMENT_PROBE_PROVIDERS_PROD_MODE
+	];
 
 } else {
-  // Development
-  PROVIDERS = [
-    ...PROVIDERS,
-    ELEMENT_PROBE_PROVIDERS
-  ];
+	// Development
+	PROVIDERS = [
+		...PROVIDERS,
+		ELEMENT_PROBE_PROVIDERS
+	];
 
 }
 
 
 export const ENV_PROVIDERS = [
-  ...PROVIDERS
+	...PROVIDERS
 ];

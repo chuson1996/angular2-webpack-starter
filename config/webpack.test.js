@@ -111,7 +111,28 @@ module.exports = {
       // Returns file content as string
       //
       // See: https://github.com/webpack/raw-loader
-      {test: /\.css$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')]}
+      {test: /\.css$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')]},
+
+      // Jade loader support for *.jade
+      // Returns file.jade content as template FUNCTION
+      // 
+      // See: https://github.com/webpack/jade-loader
+      { test: /\.jade$/, loader: 'jade-loader' },
+
+      // File loader
+      // 
+      // See: https://github.com/webpack/file-loader
+      { test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/, loader: 'file-loader' },
+
+      // Url loader
+      //
+      // See: https://github.com/webpack/url-loader
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' },
+
+      // Sass loader
+      // 
+      // See: https://github.com/jtangelder/sass-loader
+      { test: /\.scss$/, loaders: ["style", "css", "sass"] },
 
     ],
 
